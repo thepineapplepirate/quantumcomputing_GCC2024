@@ -1,0 +1,574 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "",
+    "format-version": "0.1",
+    "name": "quantumpsp+rebuild+em+md",
+    "steps": {
+        "0": {
+            "annotation": "",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "",
+                    "name": "Input: Qiskit notebook"
+                }
+            ],
+            "label": "Input: Qiskit notebook",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 150.34095380859364,
+                "top": 67.02083333333333
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false, \"tag\": null}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "0889e1c1-b706-44b5-a529-940ae43f48ea",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "1": {
+            "annotation": "",
+            "content_id": "interactive_tool_qiskit_jupyter_notebook",
+            "errors": null,
+            "id": 1,
+            "input_connections": {
+                "mode|ipynb": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "Qiskit Jupyter notebook",
+            "outputs": [
+                {
+                    "name": "output_collection",
+                    "type": "input"
+                },
+                {
+                    "name": "jupyter_notebook",
+                    "type": "ipynb"
+                },
+                {
+                    "name": "output_dataset",
+                    "type": "data"
+                }
+            ],
+            "position": {
+                "left": 460.27845380859367,
+                "top": 0
+            },
+            "post_job_actions": {
+                "ChangeDatatypeActionoutput_dataset": {
+                    "action_arguments": {
+                        "newtype": "pdb"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "output_dataset"
+                }
+            },
+            "tool_id": "interactive_tool_qiskit_jupyter_notebook",
+            "tool_state": "{\"mode\": {\"mode_select\": \"previous\", \"__current_case__\": 1, \"ipynb\": {\"__class__\": \"ConnectedValue\"}, \"run_it\": true}, \"user_inputs\": [{\"__index__\": 0, \"input_name\": \"protein1\", \"description\": null, \"input_type\": {\"input_type_selector\": \"dataset\", \"__current_case__\": 0, \"input_value\": {\"__class__\": \"RuntimeValue\"}}}], \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.2",
+            "type": "tool",
+            "uuid": "ceb7f209-ec04-4f43-a620-3b42d69250ac",
+            "when": null,
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output_collection",
+                    "uuid": "c6bb0306-b0ee-46f3-8d60-b7399225af9a"
+                },
+                {
+                    "label": null,
+                    "output_name": "output_dataset",
+                    "uuid": "e5e08098-79fc-4201-901f-de9b11600373"
+                }
+            ]
+        },
+        "2": {
+            "annotation": "",
+            "content_id": "__EXTRACT_DATASET__",
+            "errors": null,
+            "id": 2,
+            "input_connections": {
+                "input": {
+                    "id": 1,
+                    "output_name": "output_collection"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "Extract dataset",
+            "outputs": [
+                {
+                    "name": "output",
+                    "type": "data"
+                }
+            ],
+            "position": {
+                "left": 330.9446220214843,
+                "top": 388.09656524658203
+            },
+            "post_job_actions": {
+                "ChangeDatatypeActionoutput": {
+                    "action_arguments": {
+                        "newtype": "xyz"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "output"
+                }
+            },
+            "tool_id": "__EXTRACT_DATASET__",
+            "tool_state": "{\"input\": {\"__class__\": \"ConnectedValue\"}, \"which\": {\"which_dataset\": \"first\", \"__current_case__\": 0}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "1.0.1",
+            "type": "tool",
+            "uuid": "b11d8e63-93f5-4344-a5a6-a46382cc07fc",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "3": {
+            "annotation": "",
+            "content_id": "qiskit_xyz2pdb",
+            "errors": null,
+            "id": 3,
+            "input_connections": {
+                "structure_input": {
+                    "id": 2,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "Convert Qiskit's XYZ files to",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "pdb"
+                }
+            ],
+            "position": {
+                "left": 0,
+                "top": 616.2109451293945
+            },
+            "post_job_actions": {},
+            "tool_id": "qiskit_xyz2pdb",
+            "tool_state": "{\"output_format\": \"alpha_carbon_trace\", \"structure_input\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.2+galaxy0",
+            "type": "tool",
+            "uuid": "bac01220-3351-4486-ab92-5891923fccd5",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "4": {
+            "annotation": "",
+            "content_id": "pulchra",
+            "errors": null,
+            "id": 4,
+            "input_connections": {
+                "structure_input": {
+                    "id": 3,
+                    "output_name": "output1"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "PULCHRA recontruction of all atom proteins",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "pdb"
+                }
+            ],
+            "position": {
+                "left": 281.6513175781249,
+                "top": 687.9118423461914
+            },
+            "post_job_actions": {},
+            "tool_id": "pulchra",
+            "tool_state": "{\"__input_ext\": \"pdb\", \"__workflow_invocation_uuid__\": \"99bfd5ca949011ee921fe6ad31f31f71\", \"chromInfo\": \"/Users/raubenb/galaxy_interactive/tool-data/shared/ucsc/chrom/?.len\", \"skip_sidechain\": false, \"structure_input\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "3.06+galaxy0",
+            "type": "tool",
+            "uuid": "8d45e0ed-5ad9-4f7f-a46b-6c6514cf3afe",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "5": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_setup/gmx_setup/2022+galaxy0",
+            "errors": null,
+            "id": 5,
+            "input_connections": {
+                "pdb_input": {
+                    "id": 4,
+                    "output_name": "output1"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "GROMACS initial setup",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "top"
+                },
+                {
+                    "name": "output2",
+                    "type": "gro"
+                },
+                {
+                    "name": "output3",
+                    "type": "itp"
+                },
+                {
+                    "name": "report",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 511.6013704752604,
+                "top": 564.2435709635417
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_setup/gmx_setup/2022+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "070e3ecc3fda",
+                "name": "gmx_setup",
+                "owner": "chemteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"__input_ext\": \"pdb\", \"__workflow_invocation_uuid__\": \"99bfd5ca949011ee921fe6ad31f31f71\", \"capture_log\": true, \"chromInfo\": \"/Users/raubenb/galaxy_interactive/tool-data/shared/ucsc/chrom/?.len\", \"ff\": \"amber99sb\", \"ignore_h\": true, \"pdb_input\": {\"__class__\": \"ConnectedValue\"}, \"water\": \"tip3p\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2022+galaxy0",
+            "type": "tool",
+            "uuid": "9574bff0-3c78-486e-83c8-3995c90a641b",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "6": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_editconf/gmx_editconf/2022+galaxy0",
+            "errors": null,
+            "id": 6,
+            "input_connections": {
+                "input_file": {
+                    "id": 5,
+                    "output_name": "output2"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "GROMACS structure configuration",
+            "outputs": [
+                {
+                    "name": "output",
+                    "type": "gro"
+                },
+                {
+                    "name": "report",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 694.4972038085938,
+                "top": 270.0717146666667
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_editconf/gmx_editconf/2022+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "88076940fa94",
+                "name": "gmx_editconf",
+                "owner": "chemteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"__input_ext\": \"gro\", \"__workflow_invocation_uuid__\": \"99bfd5ca949011ee921fe6ad31f31f71\", \"box\": {\"config\": \"true\", \"__current_case__\": 0, \"dim\": \"1.0\", \"type\": \"cubic\"}, \"capture_log\": true, \"chromInfo\": \"/Users/raubenb/galaxy_interactive/tool-data/shared/ucsc/chrom/?.len\", \"input_file\": {\"__class__\": \"ConnectedValue\"}, \"output_format\": \"gro\", \"renumber\": {\"renum\": \"false\", \"__current_case__\": 1}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2022+galaxy0",
+            "type": "tool",
+            "uuid": "1ebd0810-81c8-4188-ba6e-b2f5b1ad79d1",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "7": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_solvate/gmx_solvate/2022+galaxy0",
+            "errors": null,
+            "id": 7,
+            "input_connections": {
+                "gro_input": {
+                    "id": 6,
+                    "output_name": "output"
+                },
+                "top_input": {
+                    "id": 5,
+                    "output_name": "output1"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "GROMACS solvation and adding ions",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "gro"
+                },
+                {
+                    "name": "output2",
+                    "type": "top"
+                },
+                {
+                    "name": "report",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 914.4972038085938,
+                "top": 270.0717146666667
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_solvate/gmx_solvate/2022+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "c4fbab8e03c5",
+                "name": "gmx_solvate",
+                "owner": "chemteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"__input_ext\": \"gro\", \"__workflow_invocation_uuid__\": \"99bfd5ca949011ee921fe6ad31f31f71\", \"capture_log\": true, \"chromInfo\": \"/Users/raubenb/galaxy_interactive/tool-data/shared/ucsc/chrom/?.len\", \"conc\": \"0.0\", \"gro_input\": {\"__class__\": \"ConnectedValue\"}, \"mxw\": \"2\", \"neutralise\": \"-neutral\", \"seed\": \"1\", \"top_input\": {\"__class__\": \"ConnectedValue\"}, \"water_model\": \"spc216\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2022+galaxy0",
+            "type": "tool",
+            "uuid": "bdbd0d87-7456-4111-9162-f08d104c70e6",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "8": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_em/gmx_em/2022+galaxy0",
+            "errors": null,
+            "id": 8,
+            "input_connections": {
+                "gro_input": {
+                    "id": 7,
+                    "output_name": "output1"
+                },
+                "top_input": {
+                    "id": 7,
+                    "output_name": "output2"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "GROMACS energy minimization",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "gro"
+                },
+                {
+                    "name": "output2",
+                    "type": "edr"
+                },
+                {
+                    "name": "report",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 1134.4972038085937,
+                "top": 270.0717146666667
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_em/gmx_em/2022+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "b46d4b4d995c",
+                "name": "gmx_em",
+                "owner": "chemteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"__input_ext\": \"gro\", \"__workflow_invocation_uuid__\": \"99bfd5ca949011ee921fe6ad31f31f71\", \"capture_log\": true, \"chromInfo\": \"/Users/raubenb/galaxy_interactive/tool-data/shared/ucsc/chrom/?.len\", \"gro_input\": {\"__class__\": \"ConnectedValue\"}, \"mdp\": {\"mdpfile\": \"default\", \"__current_case__\": 1, \"integrator\": \"steep\", \"cutoffscheme\": \"Verlet\", \"coulombtype\": \"PME\", \"rcoulomb\": \"1.0\", \"rlist\": \"1.0\", \"rvdw\": \"1.0\", \"md_steps\": \"1000\", \"emtol\": \"1000.0\", \"emstep\": \"0.01\", \"seed\": \"1\"}, \"mxw\": \"2\", \"top_input\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2022+galaxy0",
+            "type": "tool",
+            "uuid": "c0a87c11-3068-4274-ad4c-ab042e014e8f",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "9": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_sim/gmx_sim/2022+galaxy0",
+            "errors": null,
+            "id": 9,
+            "input_connections": {
+                "gro_input": {
+                    "id": 8,
+                    "output_name": "output1"
+                },
+                "inps|itp_in": {
+                    "id": 5,
+                    "output_name": "output3"
+                },
+                "top_input": {
+                    "id": 7,
+                    "output_name": "output2"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "GROMACS simulation",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "gro"
+                },
+                {
+                    "name": "output5",
+                    "type": "cpt"
+                },
+                {
+                    "name": "output8",
+                    "type": "tpr"
+                },
+                {
+                    "name": "report",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 1354.4972038085937,
+                "top": 270.0717146666667
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_sim/gmx_sim/2022+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "c0c9a5024177",
+                "name": "gmx_sim",
+                "owner": "chemteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"__input_ext\": \"gro\", \"__workflow_invocation_uuid__\": \"99bfd5ca949011ee921fe6ad31f31f71\", \"capture_log\": true, \"chromInfo\": \"/Users/raubenb/galaxy_interactive/tool-data/shared/ucsc/chrom/?.len\", \"gro_input\": {\"__class__\": \"ConnectedValue\"}, \"inps\": {\"cpt_in\": null, \"itp_in\": {\"__class__\": \"ConnectedValue\"}, \"ndx_in\": null}, \"mxw\": \"2\", \"outps\": {\"traj\": \"none\", \"str\": \"gro\", \"cpt_out\": \"true\", \"edr_out\": \"false\", \"xvg_out\": \"false\", \"tpr_out\": \"true\"}, \"sets\": {\"ensembleselect\": {\"ensemble\": \"nvt\", \"__current_case__\": 0, \"startvel\": \"true\"}, \"mdp\": {\"mdpfile\": \"default\", \"__current_case__\": 1, \"integrator\": \"md\", \"constraints\": \"h-bonds\", \"cutoffscheme\": \"Verlet\", \"coulombtype\": \"PME\", \"temperature\": \"300\", \"systemTcouple\": \"false\", \"step_length\": \"0.002\", \"write_freq\": \"10\", \"rcoulomb\": \"1.0\", \"rlist\": \"1.0\", \"rvdw\": \"1.0\", \"md_steps\": \"100\"}}, \"top_input\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2022+galaxy0",
+            "type": "tool",
+            "uuid": "ce3d06cf-fa77-4121-9964-7d45ed039172",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "10": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_sim/gmx_sim/2022+galaxy0",
+            "errors": null,
+            "id": 10,
+            "input_connections": {
+                "gro_input": {
+                    "id": 9,
+                    "output_name": "output1"
+                },
+                "inps|cpt_in": {
+                    "id": 9,
+                    "output_name": "output5"
+                },
+                "top_input": {
+                    "id": 7,
+                    "output_name": "output2"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "GROMACS simulation",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "gro"
+                },
+                {
+                    "name": "output5",
+                    "type": "cpt"
+                },
+                {
+                    "name": "report",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 1574.4972038085937,
+                "top": 270.0717146666667
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_sim/gmx_sim/2022+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "c0c9a5024177",
+                "name": "gmx_sim",
+                "owner": "chemteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"__input_ext\": \"gro\", \"__workflow_invocation_uuid__\": \"99bfd5ca949011ee921fe6ad31f31f71\", \"capture_log\": true, \"chromInfo\": \"/Users/raubenb/galaxy_interactive/tool-data/shared/ucsc/chrom/?.len\", \"gro_input\": {\"__class__\": \"ConnectedValue\"}, \"inps\": {\"cpt_in\": {\"__class__\": \"ConnectedValue\"}, \"itp_in\": null, \"ndx_in\": null}, \"mxw\": \"2\", \"outps\": {\"traj\": \"none\", \"str\": \"gro\", \"cpt_out\": \"true\", \"edr_out\": \"false\", \"xvg_out\": \"false\", \"tpr_out\": \"false\"}, \"sets\": {\"ensembleselect\": {\"ensemble\": \"npt\", \"__current_case__\": 1}, \"mdp\": {\"mdpfile\": \"default\", \"__current_case__\": 1, \"integrator\": \"md\", \"constraints\": \"h-bonds\", \"cutoffscheme\": \"Verlet\", \"coulombtype\": \"PME\", \"temperature\": \"300\", \"systemTcouple\": \"false\", \"step_length\": \"0.002\", \"write_freq\": \"10\", \"rcoulomb\": \"1.0\", \"rlist\": \"1.0\", \"rvdw\": \"1.0\", \"md_steps\": \"100\"}}, \"top_input\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2022+galaxy0",
+            "type": "tool",
+            "uuid": "610bbf3e-023c-48e8-a9d7-574359d026bb",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "11": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_sim/gmx_sim/2022+galaxy0",
+            "errors": null,
+            "id": 11,
+            "input_connections": {
+                "gro_input": {
+                    "id": 10,
+                    "output_name": "output1"
+                },
+                "inps|cpt_in": {
+                    "id": 10,
+                    "output_name": "output5"
+                },
+                "top_input": {
+                    "id": 7,
+                    "output_name": "output2"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "GROMACS simulation",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "gro"
+                },
+                {
+                    "name": "output4",
+                    "type": "xtc"
+                },
+                {
+                    "name": "output5",
+                    "type": "cpt"
+                },
+                {
+                    "name": "report",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 1794.4972038085937,
+                "top": 270.0717146666667
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/chemteam/gmx_sim/gmx_sim/2022+galaxy0",
+            "tool_shed_repository": {
+                "changeset_revision": "c0c9a5024177",
+                "name": "gmx_sim",
+                "owner": "chemteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"__input_ext\": \"gro\", \"__workflow_invocation_uuid__\": \"99bfd5ca949011ee921fe6ad31f31f71\", \"capture_log\": true, \"chromInfo\": \"/Users/raubenb/galaxy_interactive/tool-data/shared/ucsc/chrom/?.len\", \"gro_input\": {\"__class__\": \"ConnectedValue\"}, \"inps\": {\"cpt_in\": {\"__class__\": \"ConnectedValue\"}, \"itp_in\": null, \"ndx_in\": null}, \"mxw\": \"2\", \"outps\": {\"traj\": \"xtc\", \"str\": \"gro\", \"cpt_out\": \"true\", \"edr_out\": \"false\", \"xvg_out\": \"false\", \"tpr_out\": \"false\"}, \"sets\": {\"ensembleselect\": {\"ensemble\": \"npt\", \"__current_case__\": 1}, \"mdp\": {\"mdpfile\": \"default\", \"__current_case__\": 1, \"integrator\": \"md\", \"constraints\": \"h-bonds\", \"cutoffscheme\": \"Verlet\", \"coulombtype\": \"PME\", \"temperature\": \"300\", \"systemTcouple\": \"false\", \"step_length\": \"0.002\", \"write_freq\": \"10\", \"rcoulomb\": \"1.0\", \"rlist\": \"1.0\", \"rvdw\": \"1.0\", \"md_steps\": \"100\"}}, \"top_input\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2022+galaxy0",
+            "type": "tool",
+            "uuid": "0cdae666-87c2-4e41-aa5d-09a44b6f5cc2",
+            "when": null,
+            "workflow_outputs": []
+        }
+    },
+    "tags": [],
+    "uuid": "ac25a061-53b6-4e5a-ae9e-a10ee9e50e14",
+    "version": 6
+}
