@@ -93,27 +93,29 @@ class ProteinFoldingProblem(SamplingProblem):
         qubit_operator = self._qubit_op_builder.build_qubit_op()
         return qubit_operator
 
-    def interpret(self, raw_result: MinimumEigensolverResult) -> "ProteinFoldingResult":
+    def interpret(
+        self, raw_result: SamplingVQEResult | SamplerResult
+    ) -> ProteinFoldingResult:
         """
-        Interprets the raw algorithm result, in the context of this problem, and returns a
-        ProteinFoldingResult. The returned class can plot the protein and generate a
-        .xyz file with the coordinates of each of its atoms.
+        Interprets the raw algorithm result and returns a ProteinFoldingResult object.
+
         Args:
-            raw_result: The raw result of solving the protein folding problem.
+            raw_result: A raw result of the protein folding problem.
 
         Returns:
-            A :class:`~qufold.ProteinFoldingResult`
-            instance that contains the protein folding result.
+            A ProteinFoldingResult object that includes the interpreted result.
         """
-        # pylint: disable=import-outside-toplevel
         from .protein_folding_result import ProteinFoldingResult
-
-        probs = raw_result.eigenstate.binary_probabilities()
-        best_turn_sequence = max(probs, key=probs.get)
+        try:
+            best_turn_bitstring = raw_result.best_measurement["bitstring"]
+        except AttributeError:
+            prob_dist = raw_result.quasi_dists[0].binary_probabilities()
+            # Find the most probable bitstring
+            best_turn_bitstring = max(prob_dist, key=prob_dist.get)
         return ProteinFoldingResult(
-            unused_qubits=self.unused_qubits,
             peptide=self.peptide,
-            turn_sequence=best_turn_sequence,
+            unused_qubits=self.unused_qubits,
+            turn_sequence=best_turn_bitstring,
         )
 
     def interpret_new(
