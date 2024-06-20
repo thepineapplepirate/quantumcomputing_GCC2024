@@ -1,5 +1,5 @@
-# protein-folding-qc
+# Quantum Computing with Qiskit in Galaxy
 
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://ruihao-li.github.io/protein-folding-qc/index.html)
-
-Quantum Computing-based coarse-grained predictions of protein conformations on lattices.   
+Notebooks, codes, and Galaxy workflows for an Introduction to Quantum Computing with Qiskit in Galaxy.
+These include Hello World, Bloch Sphere Visualizations, and protein structure prediction using both quantum and 
+classical computing.
